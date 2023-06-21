@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "parcel": "^2.9.2",
+    "three": "^0.89.0",
+    "three.interaction": "^0.2.3"
+  },
+  "name": "3d-tic-tac-toe",
+  "version": "1.0.0",
+  "main": "tree_init.js",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
