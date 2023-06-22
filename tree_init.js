@@ -11,6 +11,7 @@ export const camera = new THREE.PerspectiveCamera(
 );
 export const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth-5, window.innerHeight-5);
+
 export const interaction = new Interaction(renderer, scene, camera);
 document.body.appendChild(renderer.domElement);
 
@@ -29,12 +30,9 @@ document.addEventListener('wheel', onDocumentMouseWheel, false);
 
 let isMouseDown = false;
 const mouse = {x: 0, y: 0};
-const cameraPosition = {dist: 5, xRotate: 0, yRotate: 0};
+const cameraPosition = {dist: 5, xRotate: 10, yRotate: 10};
 // view on cube
 function onDocumentMouseMove(e) {
-
-
-    e.preventDefault();
     mouse.x = e.clientX;
     mouse.y = e.clientY;
     const deltaX = e.movementX
@@ -48,6 +46,9 @@ function onDocumentMouseMove(e) {
         camera.lookAt(0, 0, 0);
     }
 }
+isMouseDown = true
+onDocumentMouseMove({movementX: 0, movementY: 0})
+isMouseDown = false
 
 function onDocumentMouseDown() {
     isMouseDown = true;
