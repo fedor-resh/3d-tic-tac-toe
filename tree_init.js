@@ -10,19 +10,9 @@ export const camera = new THREE.PerspectiveCamera(
     1000
 );
 export const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(window.innerWidth-5, window.innerHeight-5);
 export const interaction = new Interaction(renderer, scene, camera);
 document.body.appendChild(renderer.domElement);
-
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshPhongMaterial({color: 0x00ff00});
-export const cube = new THREE.Mesh(geometry, material);
-cube.cursor = 'pointer';
-cube.position.set(0, 0, -5);
-cube.rotateX(0.5);
-cube.rotateY(0.5);
-scene.add(cube)
-
 
 
 const animate = function () {
@@ -35,6 +25,7 @@ animate();
 document.addEventListener('mousemove', onDocumentMouseMove, false);
 document.addEventListener('mousedown', onDocumentMouseDown, false);
 document.addEventListener('mouseup', onDocumentMouseUp, false);
+document.addEventListener('wheel', onDocumentMouseWheel, false);
 
 let isMouseDown = false;
 const mouse = {x: 0, y: 0};
@@ -65,7 +56,13 @@ function onDocumentMouseDown() {
 function onDocumentMouseUp() {
     isMouseDown = false;
 }
-
+function onDocumentMouseWheel(e) {
+    cameraPosition.dist += e.deltaY * 0.01;
+    camera.position.x = cameraPosition.dist * Math.sin(cameraPosition.xRotate);
+    camera.position.y = cameraPosition.dist * Math.sin(cameraPosition.yRotate);
+    camera.position.z = cameraPosition.dist * Math.cos(cameraPosition.xRotate);
+    camera.lookAt(0, 0, 0);
+}
 // add light
 const spotLight = new THREE.SpotLight(0xeeeece);
 const spotLight2 = new THREE.SpotLight(0xffffff);
