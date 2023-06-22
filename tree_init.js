@@ -48,9 +48,9 @@ function onDocumentMouseMove(e) {
     mouse.y = e.clientY;
     const deltaX = e.movementX
     const deltaY = e.movementY
-    cameraPosition.xRotate += deltaX * 0.01;
-    cameraPosition.yRotate += deltaY * 0.01;
-    if (isMouseDown) {
+    if (-50<deltaX&&deltaX<50&&-50<deltaY&&deltaY<50&&isMouseDown) {
+        cameraPosition.xRotate += deltaX * 0.01;
+        cameraPosition.yRotate += deltaY * 0.01;
         camera.position.x = cameraPosition.dist * Math.sin(cameraPosition.xRotate);
         camera.position.y = cameraPosition.dist * Math.sin(cameraPosition.yRotate);
         camera.position.z = cameraPosition.dist * Math.cos(cameraPosition.xRotate);
