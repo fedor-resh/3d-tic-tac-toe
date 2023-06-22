@@ -1,28 +1,44 @@
-import {scene, renderer, camera, interaction} from "./tree_init";
+import {scene, renderer, camera, interaction, spheres} from "./three_init";
 import * as THREE from "three";
+import {Firebase} from "./firebase";
+
 const colors = {
-    neitral: 0x444444,
+    neutral: 0x444444,
     player1: 0xff0000,
     player2: 0x00ff00
 }
-const spheres = Array(27).fill(0).map((_, i) => {
-    const geometry = new THREE.SphereGeometry(.3, 32, 32);
-    const material = new THREE.MeshPhongMaterial({color: colors.neitral});
-    const sphere = new THREE.Mesh(geometry, material);
-    sphere.cursor = 'pointer';
-    sphere.position.set(i%3-1, Math.floor(i/3)%3-1, Math.floor(i/9)-1);
-    scene.add(sphere);
-    return sphere;
-})
-const Map = Array(27).fill(0);
+
+const urlParams = new URLSearchParams(window.location.search);
+const roomId = urlParams.get('room');
+const isFirstPlayer = !roomId;
+const firebase = new Firebase(roomId)
+
+let map = Array(27).fill(0);
 spheres.forEach((sphere, i) => {
     sphere.on('click', () => {
-        if(Map.reduce((a, b) => a+b, 0) === 0) {
-            sphere.material.color.set(colors.player1);
-            Map[i] = 1;
-        }else{
-            sphere.material.color.set(colors.player2);
-            Map[i] = -1;
-        }
+        if(map[i] !== 0) return;
+        const isFirstPlayerMove = map.reduce((a, b) => a+b, 0) === 0
+        if(isFirstPlayerMove !== isFirstPlayer) return;
+        map[i] = isFirstPlayerMove?1:-1;
+        firebase.setMap(map);
+        updateColors(map);
     })
 })
+
+function updateColors(map){
+    map.forEach((value, i) => {
+        const obj = {
+            '-1':'player2',
+            '0': 'neitral',
+            '1': 'player1'
+        }
+        spheres?.[i]?.material.color.set(colors[obj[value]]);
+    })
+}
+
+firebase.mapListener(
+    (newMap) => {
+        map = newMap;
+        updateColors(map);
+    }
+)
