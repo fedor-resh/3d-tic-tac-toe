@@ -58,18 +58,18 @@ function onDocumentMouseMove(e) {
     }
 }
 
-function onDocumentMouseDown(event) {
+function onDocumentMouseDown() {
     isMouseDown = true;
 }
 
-function onDocumentMouseUp(event) {
+function onDocumentMouseUp() {
     isMouseDown = false;
 }
 
 // add light
 const spotLight = new THREE.SpotLight(0xeeeece);
-spotLight.position.set(1000, 1000, 1000);
-scene.add(spotLight);
 const spotLight2 = new THREE.SpotLight(0xffffff);
-spotLight2.position.set(-200, -200, 200);
+spotLight.position.set(1000, 1000, 1000);
+spotLight2.position.set(-200, -200, 0);
+scene.add(spotLight);
 scene.add(spotLight2);
