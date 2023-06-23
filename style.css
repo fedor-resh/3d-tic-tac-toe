@@ -1,8 +1,9 @@
 body {
     margin: 0;
-    background-color: #000000;
+    background-color: #171717;
     color: #ffffff;
     font-family: 'Calibri', sans-serif;
+    user-select: none;
 }
 #start_wrapper {
     position: absolute;
@@ -28,7 +29,69 @@ body {
     cursor: pointer;
     transition: color 0.1s ease-in-out;
 }
-#start_wrapper #offline:hover,
-#start_wrapper #online:hover {
+#start_wrapper #offline:hover{
     color: #ff6363;
+}
+#start_wrapper #online:hover {
+    color: #66ff71;
+}
+
+#score{
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 200px;
+    height: 50px;
+}
+#score #first,
+#score #second{
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 50px;
+}
+#score #first{
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 2px solid rgba(255, 146, 146, 0.5);
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    color: #ff9d9d;
+}
+#score #second{
+    background-color: rgba(0, 255, 0, 0.2);
+    border: 2px solid rgba(153, 255, 153, 0.5);
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #8cff8c;
+}
+#winner_background{
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: 1s;
+    display: grid;
+    place-items: center;
+    z-index: 100;
+    font-size: 100px;
+    pointer-events: none;
+}
+#winner_background.red,
+#winner_background.green,
+#winner_background.draw{
+    opacity: 0.5;
+}
+#winner_background.red{
+    background-color: rgba(255, 0, 0, 0.5);
+    color: rgba(255, 0, 0, 0.5);
+}
+#winner_background.green{
+    background-color: rgba(0, 255, 0, 0.5);
+    color: rgba(0, 255, 0, 0.5);
+}
+#winner_background.draw{
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.5);
 }

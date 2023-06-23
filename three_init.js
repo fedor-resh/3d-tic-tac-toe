@@ -1,7 +1,13 @@
 // draw cube with three js
 import * as THREE from 'three';
 import {Interaction} from 'three.interaction';
-
+import {WebGLRenderTargetCube} from "three";
+import posx from './skybox/px.png';
+import negx from './skybox/nx.png';
+import posy from './skybox/py.png';
+import negy from './skybox/ny.png';
+import posz from './skybox/pz.png';
+import negz from './skybox/nz.png';
 export const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera(
     75,
@@ -9,12 +15,15 @@ export const camera = new THREE.PerspectiveCamera(
     0.1,
     1000
 );
-export const renderer = new THREE.WebGLRenderer();
+export const renderer = new THREE.WebGLRenderer({alpha: false});
 renderer.setSize(window.innerWidth-5, window.innerHeight-5);
 
 export const interaction = new Interaction(renderer, scene, camera);
 document.body.appendChild(renderer.domElement);
 
+scene.background = new THREE.CubeTextureLoader()
+    .setPath('')
+    .load([posx, negx, posy, negy, posz, negz]);
 
 const animate = function () {
     requestAnimationFrame(animate);
