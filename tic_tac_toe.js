@@ -8,19 +8,45 @@ const colors = {
     player2: 0x00ff00
 }
 
-const urlParams = new URLSearchParams(window.location.search);
-const roomId = urlParams.get('room');
-const isFirstPlayer = !roomId;
-const firebase = new Firebase(roomId)
+// var urlParams = new URLSearchParams(window.location.search);
+// var roomId = urlParams.get('room');
+let isFirstPlayer = true;
+let firebase = null
+let isOnlineGame = true;
+export function startOnlineGame() {
+    firebase = new Firebase()
+    firebase.mapListener(
+        (newMap) => {
+            map = newMap;
+            updateColors(map);
+        }
+    )
+    window.history.pushState({}, null, `?room=${firebase.roomId}`);
+}
+export function joinOnlineGame(roomId) {
+    firebase = new Firebase(roomId)
+    firebase.mapListener(
+        (newMap) => {
+            map = newMap;
+            updateColors(map);
+        }
+    )
+    isFirstPlayer = false;
+}
+
+export function startOfflineGame() {
+    isOnlineGame = false;
+    return {isFirstPlayer: true}
+}
 
 let map = Array(27).fill(0);
 spheres.forEach((sphere, i) => {
     sphere.on('click', () => {
         if(map[i] !== 0) return;
         const isFirstPlayerMove = map.reduce((a, b) => a+b, 0) === 0
-        if(isFirstPlayerMove !== isFirstPlayer) return;
+        if(isFirstPlayerMove !== isFirstPlayer&&isOnlineGame) return;
         map[i] = isFirstPlayerMove?1:-1;
-        firebase.setMap(map);
+        if(isOnlineGame) firebase.setMap(map);
         updateColors(map);
     })
 })
@@ -36,9 +62,3 @@ function updateColors(map){
     })
 }
 
-firebase.mapListener(
-    (newMap) => {
-        map = newMap;
-        updateColors(map);
-    }
-)

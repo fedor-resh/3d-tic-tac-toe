@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Calibri', sans-serif;
+}
+#start_wrapper {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#start_wrapper h1{
+    font-size: 5rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 0 10px #000;
+}
+#start_wrapper #offline,
+#start_wrapper #online {
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 0 10px #000;
+    cursor: pointer;
+    transition: color 0.1s ease-in-out;
+}
+#start_wrapper #offline:hover,
+#start_wrapper #online:hover {
+    color: #ff6363;
+}

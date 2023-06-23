@@ -71,7 +71,7 @@ spotLight.position.set(1000, 1000, 1000);
 scene.add(spotLight);
 
 const spotLight2 = new THREE.SpotLight(0xffffff);
-spotLight2.position.set(-200, -200, 0);
+spotLight2.position.set(-200, 0, -200);
 scene.add(spotLight2);
 
 export const spheres = Array(27).fill(0).map((_, i) => {
