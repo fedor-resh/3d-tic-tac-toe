@@ -20,42 +20,48 @@ let map = Array(27).fill(0);
 UI.listenOfflineButton(startOfflineGame)
 UI.listenOnlineButton(startOnlineGame)
 UI.listenRoomIdInURL(joinOnlineGame)
+UI.listenPlayAgain(()=>{
+    map = Array(27).fill(0)
+    handleMove()
+})
 spheres.forEach((sphere, i) => {
     sphere.on('click', () => {
-        if(map[i] !== 0) return;
-        const isFirstPlayerMove = map.reduce((a, b) => a+b, 0) === 0
-        if(isFirstPlayerMove !== isFirstPlayer&&isOnlineGame) return;
-        map[i] = isFirstPlayerMove?1:-1;
-        if(isOnlineGame) firebase.setMap(map);
+        if (map[i] !== 0) return;
+        const isFirstPlayerMove = map.reduce((a, b) => a + b, 0) === 0
+        if (isFirstPlayerMove !== isFirstPlayer && isOnlineGame) return;
+        map[i] = isFirstPlayerMove ? 1 : -1;
+        if (isOnlineGame) firebase.setMap(map);
         handleMove()
     })
 })
+
 function handleMove() {
     const {first, second} = countScore(map);
     UI.updateScore(first, second);
-    if(!map.includes(0)){
-        if(first > second){
-            UI.redWinner()
-        }else if(first < second){
-            UI.greenWinner()
-        }else{
-            UI.draw()
-        }
-    }
     updateColors(map);
+    if (!map.includes(0)) handleEnd(first, second);
 }
 
-function updateColors(map){
+function handleEnd(first, second) {
+    if (first > second) {
+        UI.redWinner()
+    } else if (first < second) {
+        UI.greenWinner()
+    } else {
+        UI.draw()
+    }
+    isFirstPlayer = !isFirstPlayer
+}
+function updateColors(map) {
     map.forEach((value, i) => {
         const obj = {
-            '-1':'player2',
-            '0': 'neitral',
+            '-1': 'player2',
+            '0': 'neutral',
             '1': 'player1'
         }
-        spheres?.[i]?.material.color.set(colors[obj[value]]);
+        spheres[i].material.color.set(colors[obj[value]]);
     })
 }
-
 
 
 export function startOnlineGame() {
@@ -67,7 +73,9 @@ export function startOnlineGame() {
         }
     )
     window.history.pushState({}, null, `?room=${firebase.roomId}`);
+    alert(`Share your link: ${window.location.href}`)
 }
+
 export function joinOnlineGame(roomId) {
     firebase = new Firebase(roomId)
     firebase.mapListener(

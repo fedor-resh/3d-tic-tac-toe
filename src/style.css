@@ -95,3 +95,11 @@ body {
     background-color: rgba(255, 255, 255, 0.5);
     color: rgba(255, 255, 255, 0.5);
 }
+#winner_background #play_again{
+    color: #ffffff;
+    font-size: 50px;
+    pointer-events: all;
+    transition: 0ms;
+    opacity: inherit;
+    cursor: pointer;
+}
