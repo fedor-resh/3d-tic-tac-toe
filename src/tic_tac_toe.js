@@ -20,10 +20,7 @@ let map = Array(27).fill(0);
 UI.listenOfflineButton(startOfflineGame)
 UI.listenOnlineButton(startOnlineGame)
 UI.listenRoomIdInURL(joinOnlineGame)
-UI.listenPlayAgain(()=>{
-    map = Array(27).fill(0)
-    handleMove()
-})
+UI.listenPlayAgain(()=>{})
 spheres.forEach((sphere, i) => {
     sphere.on('click', () => {
         if (map[i] !== 0) return;
@@ -40,6 +37,7 @@ function handleMove() {
     UI.updateScore(first, second);
     updateColors(map);
     if (!map.includes(0)) handleEnd(first, second);
+    console.log({isFirstPlayer, first, second, map})
 }
 
 function handleEnd(first, second) {
@@ -51,6 +49,8 @@ function handleEnd(first, second) {
         UI.draw()
     }
     isFirstPlayer = !isFirstPlayer
+    map = Array(27).fill(0)
+    handleMove()
 }
 function updateColors(map) {
     map.forEach((value, i) => {
