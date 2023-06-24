@@ -13,8 +13,6 @@ export class Firebase {
         }
         this.mapRef = ref(database, `rooms/${this.roomId}/map`);
         onDisconnect(this.roomRef).remove();
-    //  add to url roomId
-
     }
     setMap(map) {
         set(this.mapRef, map);

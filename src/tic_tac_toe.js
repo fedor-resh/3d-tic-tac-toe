@@ -10,6 +10,7 @@ const colors = {
     player2: 0x00ff00
 }
 
+
 let isFirstPlayer = true;
 let firebase = null
 let isOnlineGame = true;
@@ -81,3 +82,4 @@ export function joinOnlineGame(roomId) {
 export function startOfflineGame() {
     isOnlineGame = false;
 }
+

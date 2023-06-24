@@ -8,7 +8,7 @@
   },
   "name": "3d-tic-tac-toe",
   "version": "1.0.0",
-  "main": "index.html",
+  "main": "src/index.html",
   "scripts": {
     "dev": "webpack-dev-server --mode development",
     "build": "webpack"

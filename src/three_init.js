@@ -1,4 +1,3 @@
-// draw cube with three js
 import * as THREE from 'three';
 import {Interaction} from 'three.interaction';
 import {WebGLRenderTargetCube} from "three";
