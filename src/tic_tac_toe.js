@@ -16,17 +16,20 @@ let firebase = null
 let isOnlineGame = true;
 
 let map = Array(27).fill(0);
-
+UI.redStep()
 UI.listenOfflineButton(startOfflineGame)
 UI.listenOnlineButton(startOnlineGame)
 UI.listenRoomIdInURL(joinOnlineGame)
-UI.listenPlayAgain(()=>{})
+UI.listenPlayAgain(()=>{
+    isFirstPlayer = !isFirstPlayer
+    map = Array(27).fill(0)
+    handleMove()
+})
 spheres.forEach((sphere, i) => {
     sphere.on('click', () => {
         if (map[i] !== 0) return;
-        const isFirstPlayerMove = map.reduce((a, b) => a + b, 0) === 0
-        if (isFirstPlayerMove !== isFirstPlayer && isOnlineGame) return;
-        map[i] = isFirstPlayerMove ? 1 : -1;
+        if (isFirstPlayerMove() !== isFirstPlayer && isOnlineGame) return;
+        map[i] = isFirstPlayerMove() ? 1 : -1;
         if (isOnlineGame) firebase.setMap(map);
         handleMove()
     })
@@ -36,8 +39,8 @@ function handleMove() {
     const {first, second} = countScore(map);
     UI.updateScore(first, second);
     updateColors(map);
+    isFirstPlayerMove() ? UI.redStep() : UI.greenStep();
     if (!map.includes(0)) handleEnd(first, second);
-    console.log({isFirstPlayer, first, second, map})
 }
 
 function handleEnd(first, second) {
@@ -48,9 +51,6 @@ function handleEnd(first, second) {
     } else {
         UI.draw()
     }
-    isFirstPlayer = !isFirstPlayer
-    map = Array(27).fill(0)
-    handleMove()
 }
 function updateColors(map) {
     map.forEach((value, i) => {
@@ -63,7 +63,9 @@ function updateColors(map) {
     })
 }
 
-
+function isFirstPlayerMove() {
+    return map.reduce((a, b) => a + b, 0) === 0
+}
 export function startOnlineGame() {
     firebase = new Firebase()
     firebase.mapListener(

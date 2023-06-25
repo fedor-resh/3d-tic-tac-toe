@@ -5,6 +5,8 @@ const offlineButton = document.querySelector('#offline');
 const score = document.querySelector('#score');
 const winner_background = document.querySelector('#winner_background');
 const playAgain = document.querySelector('#play_again');
+const first = score.querySelector('#first');
+const second = score.querySelector('#second');
 export class UI{
     static listenRoomIdInURL(joinOnlineGame) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -55,5 +57,13 @@ export class UI{
             winner_background.className = ''
             winner_background.children[0].innerText = ''
         })
+    }
+    static greenStep() {
+        second.className = 'active'
+        first.className = ''
+    }
+    static redStep() {
+        first.className = 'active'
+        second.className = ''
     }
 }

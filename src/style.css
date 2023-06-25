@@ -52,6 +52,7 @@ body {
     font-weight: 700;
     text-align: center;
     line-height: 50px;
+    transition: 0.2s;
 }
 #score #first{
     background-color: rgba(255, 0, 0, 0.2);
@@ -66,6 +67,16 @@ body {
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
     color: #8cff8c;
+}
+#score #first.active{
+    background-color: rgba(255, 0, 0, 0.5);
+    border: 2px solid rgb(255, 188, 188);
+    color: #ffe4e4;
+}
+#score #second.active{
+    background-color: rgba(0, 255, 0, 0.5);
+    border: 2px solid rgb(182, 255, 182);
+    color: #eaffea;
 }
 #winner_background{
     position: absolute;
