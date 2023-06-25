@@ -39,7 +39,7 @@ document.addEventListener('wheel', onDocumentMouseWheel, false);
 
 let isMouseDown = false;
 const mouse = {x: 0, y: 0, prevX: 0, prevY: 0};
-const cameraPosition = {dist: 5, xRotate: 10, yRotate: 10};
+const cameraPosition = {dist: 5, xRotate: 10, yRotate: 0.5};
 // view on cube
 function onDocumentMouseMove(e, isTouch=false) {
     mouse.x = e.clientX;
@@ -48,7 +48,8 @@ function onDocumentMouseMove(e, isTouch=false) {
     const deltaY = mouse.y - mouse.prevY
     if (-50<deltaX&&deltaX<50&&-50<deltaY&&deltaY<50&&(isMouseDown||isTouch)) {
         cameraPosition.xRotate -= deltaX * 0.01;
-        cameraPosition.yRotate -= deltaY * 0.01;
+        cameraPosition.yRotate += deltaY * 0.01;
+        cameraPosition.yRotate = Math.min(Math.max(cameraPosition.yRotate, -Math.PI / 2), Math.PI / 2);
         setCamera(cameraPosition)
     }
     mouse.prevX = mouse.x
