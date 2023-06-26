@@ -14,9 +14,16 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                test: /\.(png|svg|jpg|jpeg|gif)$/,
                 type: 'asset/resource',
             },
+            {
+                test: /\.ico$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                }
+            }
         ],
     },
     devServer: {
@@ -24,6 +31,9 @@ module.exports = {
         open: true
     },
     plugins: [
-        new HtmlWebpackPlugin({template: './src/index.html'}),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            favicon: "./src/favicon.ico"
+        }),
     ]
 }
