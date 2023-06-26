@@ -1,8 +1,8 @@
-import {scene, renderer, camera, interaction, spheres} from "./three_init";
-import * as THREE from "three";
+import {spheres} from "./three_init";
 import {Firebase} from "./firebase";
 import {UI} from "./ui";
 import {countScore} from "./count_score";
+import './style.css'
 
 const colors = {
     neutral: 0x444444,
@@ -40,6 +40,7 @@ function handleMove() {
     UI.updateScore(first, second);
     updateColors(map);
     isFirstPlayerMove() ? UI.redStep() : UI.greenStep();
+    if (isOnlineGame) isFirstPlayerMove() === isFirstPlayer ? UI.yourTurn() : UI.notYourTurn()
     if (!map.includes(0)) handleEnd(first, second);
 }
 
@@ -74,8 +75,9 @@ export function startOnlineGame() {
             handleMove()
         }
     )
+    UI.yourTurn()
     window.history.pushState({}, null, `?room=${firebase.roomId}`);
-    alert(`Share your link: ${window.location.href}`)
+    alert('Поделись текущей ссылкой сайта со вторым игроком')
 }
 
 export function joinOnlineGame(roomId) {

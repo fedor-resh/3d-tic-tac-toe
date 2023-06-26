@@ -1,4 +1,3 @@
-import {startOnlineGame, joinOnlineGame, startOfflineGame} from './tic_tac_toe'
 const startWrapper = document.querySelector('#start_wrapper');
 const onlineButton = document.querySelector('#online');
 const offlineButton = document.querySelector('#offline');
@@ -65,5 +64,11 @@ export class UI{
     static redStep() {
         first.className = 'active'
         second.className = ''
+    }
+    static yourTurn(){
+        score.className = 'your_turn'
+    }
+    static notYourTurn(){
+        score.className = ''
     }
 }

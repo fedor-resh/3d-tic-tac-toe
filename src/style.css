@@ -78,6 +78,20 @@ body {
     border: 2px solid rgb(182, 255, 182);
     color: #eaffea;
 }
+#score.your_turn:before{
+    content: 'Your turn';
+    position: absolute;
+    left: 50%;
+    top: 150%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 50px;
+    transition: 0.2s;
+    color: #ffffff;
+    text-shadow: 0 0 10px #000;
+}
 #winner_background{
     position: absolute;
     inset: 0;
