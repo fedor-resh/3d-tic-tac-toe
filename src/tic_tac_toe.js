@@ -25,13 +25,30 @@ UI.listenPlayAgain(()=>{
     map = Array(27).fill(0)
     handleMove()
 })
+
+let clickStart = 0;
+const clickThreshold = 200; // 500 milliseconds (0.5 seconds)
+
 spheres.forEach((sphere, i) => {
-    sphere.on('click', () => {
+    function clickAction() {
         if (map[i] !== 0) return;
         if (isFirstPlayerMove() !== isFirstPlayer && isOnlineGame) return;
         map[i] = isFirstPlayerMove() ? 1 : -1;
         if (isOnlineGame) firebase.setMap(map);
         handleMove()
+    }
+
+
+    sphere.on('mousedown', (event) => {
+        clickStart = performance.now();
+    })
+
+    sphere.on('mouseup', (event) => {
+        const clickDuration = performance.now() - clickStart;
+        if (clickDuration < clickThreshold) {
+            clickAction();
+        }
+
     })
 })
 
